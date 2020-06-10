@@ -4,6 +4,7 @@ import { shade } from 'polished';
 interface FormProps {
   hasError: boolean;
 }
+
 export const Header = styled.header`
   display: flex;
   align-items: center;

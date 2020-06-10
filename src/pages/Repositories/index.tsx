@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { FiChevronRight, FiStar } from 'react-icons/fi';
+import { FiStar } from 'react-icons/fi';
 import { AiOutlineFork } from 'react-icons/ai';
 import { GoIssueOpened } from 'react-icons/go';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { api } from '../../services/api';
 import logoImg from '../../assets/logo.svg';
 
-import { Header, Title, Respositories } from './styles';
+import { Header, Title, Respositories, DetailBtn, RemoveBtn } from './styles';
 
 interface Repository {
   id: string;
@@ -44,7 +45,17 @@ const Repositories: React.FC = () => {
       setRepositories(repositoriesFormatted);
     }
     loadRepositories();
-  }, []);
+  }, [repositories]);
+
+  async function handleRemoveRepository(id: string): Promise<void> {
+    try {
+      await api.delete(`repositories/${id}`);
+      setRepositories([]);
+      toast.success('Repository removed!');
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  }
 
   return (
     <>
@@ -55,7 +66,7 @@ const Repositories: React.FC = () => {
       <Title>Saved Repositories</Title>
       <Respositories>
         {repositories.map((repository) => (
-          <Link key={repository.id} to={`/repositories/${repository.id}`}>
+          <article key={repository.id}>
             <div>
               <strong>{repository.full_name}</strong>
               <p>{repository.description}</p>
@@ -78,9 +89,16 @@ const Repositories: React.FC = () => {
                 </li>
               </ul>
             </div>
-
-            <FiChevronRight size={20} />
-          </Link>
+            <Link to={`/repositories/${repository.id}`}>
+              <DetailBtn type="button">Details</DetailBtn>
+            </Link>
+            <RemoveBtn
+              type="button"
+              onClick={() => handleRemoveRepository(repository.id)}
+            >
+              Remove
+            </RemoveBtn>
+          </article>
         ))}
       </Respositories>
     </>

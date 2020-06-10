@@ -33,7 +33,7 @@ export const Respositories = styled.div`
   margin-top: 80px;
   max-width: 700px;
 
-  a {
+  article {
     background: #fff;
     border-radius: 5px;
     width: 100%;
@@ -49,7 +49,7 @@ export const Respositories = styled.div`
       transform: translateX(10px);
     }
 
-    & + a {
+    & + article {
       margin-top: 16px;
     }
 
@@ -101,9 +101,43 @@ export const Respositories = styled.div`
         }
       }
     }
+
     svg {
       margin-left: auto;
       color: #66819a;
     }
+  }
+`;
+
+export const DetailBtn = styled.button`
+  width: 100px;
+  height: 40px;
+  background: #9a9966;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  margin-right: 10px;
+
+  &:hover {
+    background: ${shade(0.2, '#9a9966')};
+  }
+`;
+
+export const RemoveBtn = styled.button`
+  width: 100px;
+  height: 40px;
+  background: #9a6667;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: ${shade(0.2, '#9a6667')};
   }
 `;
